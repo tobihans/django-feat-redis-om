@@ -135,3 +135,5 @@ hip
 container/mysql/queries/*.sql
 container/mysql/queries/*.sh
 *.tar
+# redis
+*.rdb
