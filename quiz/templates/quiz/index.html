@@ -1,56 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://unpkg.com/alpinejs" defer></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<head>
-  <title></title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <script src="https://unpkg.com/alpinejs" defer></script> -->
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <style>
+    input {
+      padding: 0.5rem;
+      font-size: 0.975rem;
+    }
+  </style>
 
-<style>
-  input {
-    padding: 0.5rem;
-    font-size: 0.975rem;
-  }
-</style>
-
-<body class="min-h-screen p-2">
-  <div class="text-center">
-    <h1 class="text-3xl my-8 uppercase">Create a quiz</h1>
+  <body class="min-h-screen p-2">
     <div class="form-editor my-4 p-2 mx-auto lg:max-w-xl">
-      <fieldset class="border">
-        <legend class="ml-1.5 px-2">
-          <div>
-            <span>Question:</span>
-            <input id="title" type="text" class="border" />
-          </div>
-        </legend>
-        <div class="my-4">
-          <div class="text-sm" id="possible-choices">
-            <span class="flex items-center pl-3">
-              <input id="" type="checkbox" value=""
-                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2" />
-              <label class="inline py-3 ml-2 font-medium text-gray-900">Laravel</label>
-            </span>
-          </div>
-          <div class="mt-4 flex pl-2">
-            Add: <input id="choices" class="border" />
-            <button type="button">Add</button>
-          </div>
-        </div>
-      </fieldset>
-    </div>
-    <button type="button"
-      class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">
-      Create
-    </button>
-  </div>
-</body>
-<script>
-  const titleInput = document.querySelector("input#title");
-  const choicesInput = document.querySelector("input#choices");
-</script>
+      <div class="text-center">
+        <h1 class="text-3xl my-8 uppercase">Create a quiz</h1>
+        <fieldset class="border border-green-700">
+          <legend class="ml-1.5 px-2 w-full">
+            <div>
+              <span class="float-left">Question:</span>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                class="border w-full p-1.5"
+              />
+            </div>
+          </legend>
+          <div class="my-4 text-sm ml-2">
+            <div class="text-sm" id="possible-choices">
+              <span class="flex items-center pl-3">
+                <label class="inline py-3 ml-2 font-medium text-gray-900"
+                  >Option 1:</label
+                >
+                <input type="text" name="option_1" class="ml-2 p-1.5 border" />
+              </span>
+              <span class="flex items-center pl-3">
+                <label class="inline py-3 ml-2 font-medium text-gray-900"
+                  >Option 2:</label
+                >
+                <input type="text" name="option_2" class="ml-2 p-1.5 border" />
+              </span>
+            </div>
+            <div class="mt-4 flex pl-2 items-center">
+              <p>Which option is the correct one ?</p>
+              <span class="flex items-center pl-3">
+                <input
+                  type="radio"
+                  id="op1"
+                  value="op1"
+                  name="correct_option"
+                  class="ml-2 p-1.5 border"
+                />
+                <label
+                  class="inline py-3 ml-2 font-medium text-gray-900"
+                  for="op1"
+                  >Op 1</label
+                >
+              </span>
 
+              <span class="flex items-center pl-3">
+                <input
+                  type="radio"
+                  id="op2"
+                  value="op2"
+                  name="correct_option"
+                  class="ml-2 p-1.5 border"
+                />
+                <label
+                  class="inline py-3 ml-2 font-medium text-gray-900"
+                  for="op2"
+                  >Op 2</label
+                >
+              </span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        type="button"
+        class="my-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"
+      >
+        Create
+      </button>
+    </div>
+  </body>
 </html>
