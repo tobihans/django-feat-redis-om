@@ -1,5 +1,6 @@
+import redis_om
 from django.core.exceptions import BadRequest
-from django.http import HttpResponse
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
@@ -28,4 +29,8 @@ def create(request):
 
 
 def detail(request, pk: str):
-    return HttpResponse(pk)
+    try:
+        quiz = SimpleQuiz.get(pk)
+        return render(request, "quiz/quiz.html", {"quiz": quiz})
+    except redis_om.NotFoundError as e:
+        raise Http404() from e
