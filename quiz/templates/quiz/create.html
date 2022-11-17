@@ -1,0 +1,58 @@
+{% extends 'core.html' %}
+
+{% block body %}
+
+    <div class="form-editor my-4 p-2 mx-auto lg:max-w-xl">
+        <h1 class="text-3xl my-8 uppercase">Create a simple quiz</h1>
+        <form method="POST" action="/create">
+            {% csrf_token %}
+            <fieldset class="border border-green-700">
+                <legend class="ml-1.5 px-2 w-full">
+                    <div>
+                        <span class="float-left">Question:</span>
+                        <input required id="title" name="title" type="text" class="border w-full p-1.5"/>
+                    </div>
+                </legend>
+                <div class="my-4 text-sm mx-2">
+                    <div class="text-sm" id="possible-choices">
+              <span class="flex items-center pl-3">
+                <label class="inline py-3 ml-2 font-medium text-gray-900">Option 1:</label>
+                <input required type="text" name="option1" class="grow ml-2 p-1.5 border"/>
+              </span>
+                        <span class="flex items-center pl-3">
+                <label class="inline py-3 ml-2 font-medium text-gray-900">Option 2:</label>
+                <input required type="text" name="option2" class="grow ml-2 p-1.5 border"/>
+              </span>
+                    </div>
+                    <div class="mt-4 flex pl-2 items-center">
+                        <p>Which option is the correct one ?</p>
+                        <span class="flex items-center pl-3">
+                <input required type="radio" id="op1" value="op1" name="correct_option" class="ml-2 p-1.5 border"/>
+                <label class="inline py-3 ml-2 font-medium text-gray-900" for="op1">Op 1</label>
+              </span>
+
+                        <span class="flex items-center pl-3">
+                <input required type="radio" id="op2" value="op2" name="correct_option" class="ml-2 p-1.5 border"/>
+                <label class="inline py-3 ml-2 font-medium text-gray-900" for="op2">Op 2</label>
+              </span>
+
+                        <span class="flex items-center pl-3">
+                <input required type="radio" id="op3" value="all" name="correct_option" class="ml-2 p-1.5 border"/>
+                <label class="inline py-3 ml-2 font-medium text-gray-900" for="op3">All</label>
+              </span>
+
+                        <span class="flex items-center pl-3">
+                <input required type="radio" id="op4" value="none" name="correct_option" class="ml-2 p-1.5 border"/>
+                <label class="inline py-3 ml-2 font-medium text-gray-900" for="op4">None</label>
+              </span>
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit"
+                    class="my-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5">
+                Create
+            </button>
+        </form>
+    </div>
+
+{% endblock %}
