@@ -1,0 +1,18 @@
+{% extends 'core.html' %}
+
+{% block body %}
+    <div class="form-editor my-4 p-2 mx-auto lg:max-w-xl">
+        <h1 class="text-3xl my-8 uppercase">Result</h1>
+        {% if has_succeeded %}
+            <div class="my-4 text-sm flex items-center h-12 p-2.5 bg-green-600 text-white">
+                ✅ Yeah! You got it !
+            </div>
+
+        {% else %}
+            <div class="my-4 text-sm flex items-center h-12 p-2.5 bg-red-600 text-white">
+                ❎ Ouch! You're so close :( ! Try again.
+            </div>
+        {% endif %}
+        <span class="cursor-pointer underline text-gray-800" onclick="window.history.back()">Go back</span>
+    </div>
+{% endblock %}

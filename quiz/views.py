@@ -31,6 +31,26 @@ def create(request):
 def detail(request, pk: str):
     try:
         quiz = SimpleQuiz.get(pk)
-        return render(request, "quiz/quiz.html", {"quiz": quiz})
+
+        if request.method == "GET":
+            return render(request, "quiz/quiz.html", {"quiz": quiz})
+
+        is_success = quiz.correct_option.value == request.POST.get("correct_option")
+        request.session[f"{quiz.pk}_has_succeeded"] = is_success
+        quiz.nb_of_successful_attempts += int(is_success)
+        quiz.nb_of_failed_attempts += int(not is_success)
+        quiz.save()
+
+        return redirect(reverse("quiz_result", args=[quiz.pk]))
+
     except redis_om.NotFoundError as e:
         raise Http404() from e
+
+
+def result(request, pk):
+    has_succeeded = request.session.get(f"{pk}_has_succeeded")
+
+    if has_succeeded is not None:
+        return render(request, "quiz/result.html", {"has_succeeded": has_succeeded})
+
+    raise Http404()
