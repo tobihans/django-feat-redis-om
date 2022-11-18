@@ -65,10 +65,12 @@
       webSocket.addEventListener("message",
         (event) => {
           const {event: {type, payload}} = JSON.parse(event.data);
+          console.log(event.data)
 
           switch (type) {
             case "join":
               const counterEl = document.querySelector('#count-nb-online')
+              console.log(+counterEl.textContent + payload.count)
               counterEl.textContent = +counterEl.textContent + payload.count;
               break
             default:
@@ -84,6 +86,7 @@
             count: 1,
           }
         }));
+        window.onbeforeunload = function(){ webSocket.close(); }
       })
     </script>
 {% endblock %}

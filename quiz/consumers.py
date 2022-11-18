@@ -1,5 +1,6 @@
 import json
 
+import redis
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
@@ -16,15 +17,32 @@ class QuizConsumer(WebsocketConsumer):
         self.quiz_pk = self.scope["url_route"]["kwargs"]["quiz_pk"]
         self.room_group_name = f"quiz_group_{self.quiz_pk}"
 
+        redis_client = redis.Redis(decode_responses=True)
+        key = f"count:{self.room_group_name}"
+        currently_connected = int(redis_client.get(key) or 0)
+
+        self.accept()
+
+        self.send(
+            text_data=json.dumps(
+                {"event": {"type": "join", "payload": {"count": currently_connected}}}
+            )
+        )
+
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name, self.channel_name
         )
-        self.accept()
+
+        redis_client.set(key, int(currently_connected + 1))
 
     def disconnect(self, close_code):
         """Event when client disconnects"""
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name, self.channel_name
+        )
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name, {"type": "join", "payload": {"count": -1}}
         )
 
     def receive(self, text_data):
