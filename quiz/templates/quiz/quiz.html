@@ -54,4 +54,14 @@
             </button>
         </form>
     </div>
+    <script>
+      // Connect to WebSockets server (EchoConsumer)
+      const myWebSocket = new WebSocket("ws://{{request.get_host }}/ws/quiz/{{ quiz.pk }}/");
+
+      // Event when a new message is received by
+      myWebSocket.addEventListener("message",
+        (event) => {
+        console.log(event)
+        });
+    </script>
 {% endblock %}
