@@ -53,15 +53,37 @@
                 Try
             </button>
         </form>
+        <div class="my-4 text-sm text-gray-700 flex justify-between items-center">
+            <div class="italic"><span id="count-nb-online">0</span> persons are also trying this quiz.</div>
+        </div>
     </div>
     <script>
       // Connect to WebSockets server (EchoConsumer)
-      const myWebSocket = new WebSocket("ws://{{request.get_host }}/ws/quiz/{{ quiz.pk }}/");
+      const webSocket = new WebSocket("ws://{{request.get_host }}/ws/quiz/{{ quiz.pk }}/");
 
       // Event when a new message is received by
-      myWebSocket.addEventListener("message",
+      webSocket.addEventListener("message",
         (event) => {
-        console.log(event)
+          const {event: {type, payload}} = JSON.parse(event.data);
+
+          switch (type) {
+            case "join":
+              const counterEl = document.querySelector('#count-nb-online')
+              counterEl.textContent = +counterEl.textContent + payload.count;
+              break
+            default:
+              console.log(event)
+              break
+          }
         });
+
+      webSocket.addEventListener("open", () => {
+        webSocket.send(JSON.stringify({
+          type: 'join',
+          payload: {
+            count: 1,
+          }
+        }));
+      })
     </script>
 {% endblock %}
